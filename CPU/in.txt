@@ -1,0 +1,9 @@
+push_const 1
+push_const 1
+add
+push_const 3
+push_const 4
+sub
+mul
+push_const 2
+equal

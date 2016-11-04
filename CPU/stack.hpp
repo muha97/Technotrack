@@ -70,7 +70,7 @@ void Stack_Push (Stack_t* stack, const double val)
 
     stack->data[stack->count++] = val;
 
-    $   printf ("Push %6.3lf\n", val);
+    $   printf ("Push %d\n", val);
 
     if (stack->count == stack->max_size)
     {
@@ -116,7 +116,7 @@ void Stack_Dump (Stack_t* stack)
             fprintf(dump, "Stack points to NULL. ");
         if (!stack->data)
             fprintf(dump, "Stack has no data. ");
-        if (stack->count < 0)
+        if (stack->count < 0) 
             fprintf(dump, "Stack's counter is negative.\n");
         if (stack->count >= stack->max_size)
             fprintf(dump, "Stack is overflow.\n");

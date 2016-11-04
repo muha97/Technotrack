@@ -7,14 +7,14 @@ int main() {
     Stack_Construct(&stk, 5);
     Stack_Dump(&stk);
 
-    Stack_Push(&stk, 1);
-    Stack_Push(&stk, 3);
-    Stack_Push(&stk, 10);
-    Stack_Push(&stk, 5);
-    Stack_Push(&stk, 13);
+    Stack_Push(&stk, (double)1.0);
+    Stack_Push(&stk, 3.0);
+    Stack_Push(&stk, 10.0);
+    Stack_Push(&stk, 5.0);
+    Stack_Push(&stk, 13.0);
     Stack_Dump(&stk);
 
-    Stack_Push(&stk, 6);
+    Stack_Push(&stk, 6.0);
     Stack_Dump(&stk);
 
     Stack_Pop(&stk); Stack_Pop(&stk); Stack_Pop(&stk); Stack_Pop(&stk); Stack_Pop(&stk); Stack_Pop(&stk);
