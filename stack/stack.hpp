@@ -1,27 +1,39 @@
-#ifndef DEBUG_MODE
-#define DEBUG_MODE 1
-
-#if DEBUG_MODE
-#define $ if(1)
-#else
-#define $ ;
-#endif
-#endif
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <assert.h>
 #include <ctime>
 
+#ifndef DEBUG_MODE
+#define DEBUG_MODE
+#endif //! Эта команда должна стоять здесь
+
+#if DEBUG_MODE
+    #define $ if(1)
+#else
+    #define $ ;
+#endif
+//! А не здесь.
+
 bool dump_created = 0;
 
-#define T 
+#define T
 struct Stack_t
 {
     double* data;
     int count;
     int max_size;
 };
+
+/*
+    * Разбей файл на .h и .cpp. В заголовочном должны быть все прототипы и структура.
+    * А в .cpp все реализации.
+*/
+
+/*
+    * Я чуть-чуть подправил формаьирование. Посмотри по diff, где именно.
+    * И определись наконец, ставишь ты пробелы между названием функции и
+    * скобками, или нет.
+*/
 
 void Stack_Construct (Stack_t* stack, const int len)
 {
@@ -31,26 +43,30 @@ void Stack_Construct (Stack_t* stack, const int len)
     stack->data = (double*) calloc(len, sizeof(double));
     $   printf ("Stack data allocated.\n");
 
-    stack->count = 0;
+    stack->count    =   0;
     stack->max_size = len;
 }
 
 void Stack_Destruct (Stack_t* stack)
 {
     free (stack->data);
-    stack->data = NULL;
-    stack->count = -1;
+
+    stack->data     = NULL;
+    stack->count    =   -1;
     stack->max_size = -666;
 }
 
 bool Stack_OK (const Stack_t* stack) //Stack is OK? 1 - YES, 0 -NO
 {
-    return ( stack && stack->data && (stack->count >= 0) && (stack->count <= stack->max_size) ) ? 1 : 0;
+    return ( stack                            &&
+             stack->data                      &&
+             stack->count >= 0                &&
+             stack->count <= stack->max_size;
 }
 
 bool Stack_Empty (const Stack_t* stack) //Stack is empty? 1 -YES, 0 -NO
 {
-    return (stack->count == 0) ? 1 : 0;
+    return stack->count == 0;
 }
 
 bool Stack_Grow (Stack_t* stack)
@@ -67,6 +83,15 @@ bool Stack_Grow (Stack_t* stack)
 void Stack_Push (Stack_t* stack, const double val)
 {
     assert (Stack_OK(stack));
+
+    /*
+        * Здесь надо бы изменить подход. Минус твоего в том, что стек может
+        * разшириться без надобности. Просто от того, что он заполнен.
+
+        * Стек должен расширяться, когда он уже заполнен и ты туда ещё что-то
+        * пихаешь. Так что логику нужно изменить так, чтобы сначала шла проверка
+        * на заполненность, а потом уже пушилось значение.
+    */
 
     stack->data[stack->count++] = val;
 
@@ -111,6 +136,12 @@ void Stack_Dump (Stack_t* stack)
 
     if (!Stack_OK(stack))
     {
+        /*
+            * Используй errno
+            * Да и на самом деле, нужно не только причину ошибки выводить, но и
+            * содержимое струкутруры. Так что статус (OK/NOTOK) я бы вынес
+            * в отдельный if.
+        */
         fprintf(dump, "\nSTACK IS NOT OK!!!\n");
         if (!stack)
             fprintf(dump, "Stack points to NULL. ");
