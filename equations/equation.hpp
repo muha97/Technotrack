@@ -1,25 +1,13 @@
-#include <cmath>
+#ifndef EQUATION_HPP
+#define EQUATION_HPP
+#endif
 
+#ifdef EQUATION_HPP
 
-/*
-    * Если ты начал где-то отделать пробелами бинарные операции, это нужно
-    * продолжать делать дальше.
-*/
+void scan_parameters (double *a, double *b, double *c);
 
-//! Ссылки - синтаксический сахар из C++. Используй указатели.
-void LineEq (const double b, const double c, double& x)
-{
-    x = - b/c;
-}
+void solve_eq (double *x1, double *x2, const double a, const double b, const double c, int *status);
 
-void QuadEq (const double a, const double b, const double c, double& x1, double& x2)
-{
-    double discriminant = sqrt(b*b - 4*a*c);
-    x1 = (- b - discriminant)/a/2;
-    x2 = (- b + discriminant)/a/2;
-}
+void print_roots (double *x1, double *x2, int *status);
 
-double QuadEq (const double a, const double b, const double c)
-{
-    return (-b/a/2);
-}
+#endif
